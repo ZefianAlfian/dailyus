@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>DailyUs · Ledger Harian</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#0b0e14">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <h1>🧾 DailyUs</h1>
+    <nav id="tabs">
+      <button data-tab="day" class="active">Hari Ini</button>
+      <button data-tab="month">Bulan</button>
+      <button data-tab="year">Tahun</button>
+      <button data-tab="settings">Atur</button>
+    </nav>
+    <span id="offline-dot" hidden title="Offline"></span>
+  </header>
+
+  <main>
+    <!-- ============ DAY ============ -->
+    <section id="tab-day" class="tab active">
+      <div class="datebar">
+        <button id="day-prev" class="ghost">←</button>
+        <input type="date" id="day-date">
+        <button id="day-next" class="ghost">→</button>
+        <button id="day-today" class="ghost">Hari ini</button>
+      </div>
+
+      <div class="day-summary" id="day-summary"></div>
+
+      <div class="pane">
+        <div class="pane-head">
+          <h2>Kebiasaan</h2>
+          <button id="add-habit" class="ghost">+ Habit</button>
+        </div>
+        <div id="habit-list" class="habit-list"></div>
+      </div>
+
+      <div class="pane">
+        <div class="pane-head">
+          <h2>Transaksi</h2>
+          <button id="add-tx" class="primary">+ Catat</button>
+        </div>
+        <div id="tx-list" class="tx-list"></div>
+        <p id="tx-empty" class="muted">Belum ada transaksi hari ini.</p>
+      </div>
+    </section>
+
+    <!-- ============ MONTH ============ -->
+    <section id="tab-month" class="tab">
+      <div class="datebar">
+        <input type="month" id="month-picker">
+      </div>
+      <div id="month-cards" class="cards"></div>
+      <div id="month-days" class="day-grid"></div>
+    </section>
+
+    <!-- ============ YEAR ============ -->
+    <section id="tab-year" class="tab">
+      <div class="datebar">
+        <input type="number" id="year-picker" min="2020" max="2100">
+      </div>
+      <div id="year-cards" class="cards"></div>
+      <div id="year-matrix" class="year-matrix"></div>
+    </section>
+
+    <!-- ============ SETTINGS ============ -->
+    <section id="tab-settings" class="tab">
+      <div class="pane">
+        <div class="pane-head"><h2>Dompet</h2><button id="add-account" class="ghost">+ Dompet</button></div>
+        <div id="account-list" class="tx-list"></div>
+      </div>
+      <div class="pane">
+        <div class="pane-head"><h2>Habit</h2><button id="add-habit-2" class="ghost">+ Habit</button></div>
+        <div id="habit-manage" class="tx-list"></div>
+      </div>
+      <div class="pane">
+        <div class="pane-head"><h2>Data</h2></div>
+        <p id="data-verdict" class="muted"></p>
+        <div class="row">
+          <button id="btn-verify" class="ghost">Verifikasi Integritas</button>
+          <button id="btn-backup" class="ghost">Backup .db</button>
+        </div>
+        <p class="muted small">Backup menyimpan salinan database ke unduhan. File asli ada di <code>~/dailyus/dailyus.db</code>.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ MODALS ============ -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-card">
+      <h3 id="modal-title">Catat Transaksi</h3>
+      <form id="tx-form" autocomplete="off">
+        <label>Tanggal <input type="date" id="f-date" required></label>
+        <label>Tipe
+          <select id="f-type" required>
+            <option value="EXPENSE">Pengeluaran</option>
+            <option value="INCOME">Pemasukan</option>
+            <option value="TRANSFER">Transfer</option>
+          </select>
+        </label>
+        <label id="f-account-wrap">Dari Dompet
+          <select id="f-account" required></select>
+        </label>
+        <label id="f-to-wrap" hidden>Ke Dompet
+          <select id="f-to"></select>
+        </label>
+        <label id="f-cat-wrap">Kategori
+          <select id="f-category">
+            <option value="PRIMER">Primer (kebutuhan)</option>
+            <option value="SEKUNDER">Sekunder (keinginan)</option>
+            <option value="TERSIER">Tersier (impuls/luar biasa)</option>
+          </select>
+        </label>
+        <label>Nominal (Rp)
+          <input type="number" id="f-amount" min="1" step="1" inputmode="numeric" placeholder="25000" required>
+        </label>
+        <label>Catatan <input type="text" id="f-note" placeholder="opsional"></label>
+        <div class="row">
+          <button type="submit" class="primary">Simpan</button>
+          <button type="button" id="modal-close" class="ghost">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="prompt" class="modal" hidden>
+    <div class="modal-card">
+      <h3 id="prompt-title">Nama</h3>
+      <input type="text" id="prompt-input" autocomplete="off">
+      <div class="row">
+        <button id="prompt-ok" class="primary">Simpan</button>
+        <button id="prompt-cancel" class="ghost">Batal</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

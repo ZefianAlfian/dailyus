@@ -1,0 +1,33 @@
+# Rahasia — jangan pernah commit
+.tunnel-key
+.health-key
+.gate-pw
+.tunnel-url
+cloudflared/tunnel-token
+cloudflared/231ea441-*.json
+*.pem
+
+# Runtime / DB — data pribadi
+dailyus.db
+dailyus.db-*
+.dailyus.db
+*.db
+*.db-shm
+*.db-wal
+
+# Log & proses
+*.log
+*.pid
+CURRENT_TOKEN.txt
+.tunnel-client.pid
+.tunnel-supervisor.pid
+
+# Dependensi / build
+node_modules/
+compiled/
+dist/
+.wrangler/
+
+# Env
+.env
+.env.*

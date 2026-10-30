@@ -1,0 +1,9 @@
+# DailyUs tunnel — cloudflared remote-managed config (token-based).
+# Jalankan: cloudflared tunnel run --token "$(cat tunnel-token)"
+# (atau ./start.sh). Tidak butuh credential file terpisah.
+tunnel: 231ea441-5f5d-4c1f-b435-cb325f230da2
+credentials-file: /home/hatch/dailyus/cloudflared/231ea441-5f5d-4c1f-b435-cb325f230da2.json
+ingress:
+  - hostname: dailyus.rizdev.ai.id
+    service: http://127.0.0.1:7878
+  - service: http_status:404

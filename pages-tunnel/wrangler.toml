@@ -1,0 +1,8 @@
+name = "dailyus-tunnel"
+compatibility_date = "2026-09-27"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dailyus-tunnel-db"
+database_id = "31f7c479-de34-4bdd-981c-fcb36baabb71"
